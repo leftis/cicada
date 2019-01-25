@@ -1,9 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"github.com/leftis/cicada/database"
 )
 
 func main() {
-	fmt.Println("asd")
+	start()
+
+	return
+}
+
+func start() {
+	database.Init()
 }
