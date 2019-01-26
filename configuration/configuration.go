@@ -7,21 +7,36 @@ import (
 	"os"
 )
 
-var config map[string]map[string]string
+type App struct {
+	CurrentDirectory string
+	Config map[string]map[string]string
+}
 
-func Config() map[string]map[string]string {
-	err :=  yaml.Unmarshal(openConfigurationFile(), &config)
+func Init() (a App) {
+	a.setCurrentDirectory()
+	a.setConfiguration()
+	return a
+}
+
+func (a *App) setConfiguration() {
+	err :=  yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	return config
 }
 
-func openConfigurationFile() (bytes []byte) {
-	pwd, _ := os.Getwd()
-	b, err := ioutil.ReadFile(pwd+"/configuration.yml")
+func (a *App) setCurrentDirectory() {
+	var err error
+	a.CurrentDirectory, err = os.Getwd()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func openConfigurationFile(currentDirectory string) (bytes []byte) {
+	b, err := ioutil.ReadFile(currentDirectory + "/configuration/global.yml")
 
 	if err != nil {
 		log.Fatal(err)
@@ -29,3 +44,4 @@ func openConfigurationFile() (bytes []byte) {
 
 	return b
 }
+

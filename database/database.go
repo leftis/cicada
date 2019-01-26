@@ -12,18 +12,26 @@ type db struct {
 	conn *sql.DB
 }
 
-var Database = &db{}
+var (
+	Database db
+	config map[string]string
+	databaseUrl string
+)
 
-func Init() {
+func Init(app configuration.App) {
+	assignDatabaseConfig(app)
+	createDatabaseUlr()
 	createConnection()
 	//checkMigrations()
 }
 
-func createConnection() {
-	databaseUrl := dbURL()
+func assignDatabaseConfig(app configuration.App) {
+	config = app.Config["database"]
+}
 
-	fmt.Println("Connecting to "+databaseUrl)
-	conn, err := sql.Open(configuration.Config()["database"]["driver"], databaseUrl)
+func createConnection() {
+	fmt.Println("Connecting to " + databaseUrl)
+	conn, err := sql.Open(config["driver"], databaseUrl)
 
 	//defer conn.Close()
 
@@ -39,9 +47,8 @@ func createConnection() {
 
 }
 
-func dbURL() string {
-	c := configuration.Config()["database"]
-	connStr := "%s://%s:%s@%s:%s/%s?sslmode=%s"
-	connStr = fmt.Sprintf(connStr, c["driver"], c["user"], c["pass"], c["host"], c["port"], c["name"], c["ssl"])
-	return connStr
+func createDatabaseUlr() {
+	c := config
+	databaseUrl := "%s://%s:%s@%s:%s/%s?sslmode=%s"
+	databaseUrl = fmt.Sprintf(databaseUrl, c["driver"], c["user"], c["pass"], c["host"], c["port"], c["name"], c["ssl"])
 }
