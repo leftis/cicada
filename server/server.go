@@ -8,15 +8,15 @@ import (
 
 func Init(app configuration.App) {
 
-	router := gin.Default()
-	router.LoadHTMLGlob(app.CurrentDirectory + "/templates/*")
+	r := gin.Default()
+	r.LoadHTMLGlob(app.CurrentDirectory + "/templates/*")
 
-	admin := router.Group("/admin")
+	admin := r.Group("/admin")
 	{
 		admin.GET("/*path", func(c *gin.Context) {
-			c.HTML(http.StatusOK, "admin.tmpl", gin.H{})
+			c.HTML(http.StatusOK, "admin.tmpl", gin.H{"env": app.Config.Environment})
 		})
 	}
 
-	router.Run(":8080")
+	r.Run()
 }

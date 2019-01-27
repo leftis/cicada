@@ -9,7 +9,23 @@ import (
 
 type App struct {
 	CurrentDirectory string
-	Config map[string]map[string]string
+	Config
+}
+
+type Config struct {
+	Environment string
+	Database
+}
+
+type Database struct {
+	SSL  string `yaml:"ssl_mode"'`
+	Host string
+	Port string
+	User string
+	Pass string
+	Name string
+	Driver string
+
 }
 
 func Init() (a App) {
@@ -19,10 +35,9 @@ func Init() (a App) {
 }
 
 func (a *App) setConfiguration() {
-	err :=  yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
-
-	if err != nil {
-		log.Fatal(err)
+	unmarshalErr :=  yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
+	if unmarshalErr != nil {
+		log.Fatal(unmarshalErr)
 	}
 }
 

@@ -8,47 +8,47 @@ import (
 	"log"
 )
 
-type db struct {
+type connection struct {
+	url string
+
 	conn *sql.DB
+	conf *configuration.Database
 }
 
 var (
-	Database db
-	config map[string]string
-	databaseUrl string
+	Database connection
 )
 
 func Init(app configuration.App) {
-	assignDatabaseConfig(app)
+	assignDatabaseConfig(&app.Config.Database)
 	createDatabaseUlr()
 	createConnection()
 	//checkMigrations()
 }
 
-func assignDatabaseConfig(app configuration.App) {
-	config = app.Config["database"]
+func assignDatabaseConfig(dbConf *configuration.Database) {
+	Database.conf = dbConf
 }
 
 func createConnection() {
-	fmt.Println("Connecting to " + databaseUrl)
-	conn, err := sql.Open(config["driver"], databaseUrl)
+	fmt.Println("Connecting to " + Database.url)
+	conn, err := sql.Open(Database.conf.Driver,  Database.url)
 
 	//defer conn.Close()
 
 	if err != nil {
-		log.Fatal("could not get a connection")
+		log.Fatal(err)
 	}
 
 	if err := conn.Ping(); err != nil {
-		log.Fatal("could not establish a good connection")
+		log.Fatal(err)
 	}
 
 	Database.conn = conn
-
 }
 
 func createDatabaseUlr() {
-	c := config
-	databaseUrl := "%s://%s:%s@%s:%s/%s?sslmode=%s"
-	databaseUrl = fmt.Sprintf(databaseUrl, c["driver"], c["user"], c["pass"], c["host"], c["port"], c["name"], c["ssl"])
+	c := Database.conf
+	Database.url = "%s://%s:%s@%s:%s/%s?sslmode=%s"
+	Database.url = fmt.Sprintf(Database.url, c.Driver, c.User, c.Pass, c.Host, c.Port, c.Name, c.SSL)
 }

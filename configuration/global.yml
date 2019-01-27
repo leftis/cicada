@@ -1,7 +1,10 @@
 database:
   host: localhost
   port: 5432
+  user: leftis
+  pass:
   name: mantis-development
   driver: postgres
-  user: leftis
-  ssl: disable
+  ssl_mode: disable
+
+environment: development
