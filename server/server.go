@@ -1,33 +1,22 @@
 package server
 
 import (
-"github.com/julienschmidt/httprouter"
-"github.com/leftis/cicada/configuration"
-"html/template"
-"log"
-"net/http"
+	"github.com/gin-gonic/gin"
+	"github.com/leftis/cicada/configuration"
+	"net/http"
 )
 
-var entryTemplate *template.Template
-
-type HTML struct {}
-
 func Init(app configuration.App) {
-	var err error
 
-	entryTemplate, err = template.ParseFiles(app.CurrentDirectory + "/server/admin-front.html")
-	if err != nil {
-		panic(err)
-	}
-	router := httprouter.New()
-	router.GET("/admin", Admin)
-	log.Fatal(http.ListenAndServe(":8080", router))
-}
+	router := gin.Default()
+	router.LoadHTMLGlob(app.CurrentDirectory + "/templates/*")
 
-func Admin(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	w.Header().Set("Content-Type", "text/html")
-	err := entryTemplate.Execute(w, HTML{})
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	admin := router.Group("/admin")
+	{
+		admin.GET("/*path", func(c *gin.Context) {
+			c.HTML(http.StatusOK, "admin.tmpl", gin.H{})
+		})
 	}
+
+	router.Run(":8080")
 }
