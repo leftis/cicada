@@ -17,6 +17,5 @@ func Init(app configuration.App) {
 			c.HTML(http.StatusOK, "admin.tmpl", gin.H{"env": app.Config.Environment})
 		})
 	}
-
 	r.Run()
 }

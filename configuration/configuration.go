@@ -18,14 +18,13 @@ type Config struct {
 }
 
 type Database struct {
-	SSL  string `yaml:"ssl_mode"'`
-	Host string
-	Port string
-	User string
-	Pass string
-	Name string
+	SSL    string `yaml:"ssl_mode"'`
+	Host   string
+	Port   string
+	User   string
+	Pass   string
+	Name   string
 	Driver string
-
 }
 
 func Init() (a App) {
@@ -35,7 +34,7 @@ func Init() (a App) {
 }
 
 func (a *App) setConfiguration() {
-	unmarshalErr :=  yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
+	unmarshalErr := yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
 	if unmarshalErr != nil {
 		log.Fatal(unmarshalErr)
 	}
@@ -59,4 +58,3 @@ func openConfigurationFile(currentDirectory string) (bytes []byte) {
 
 	return b
 }
-
