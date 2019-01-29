@@ -3,7 +3,7 @@ database:
   port: 5432
   user: leftis
   pass:
-  name: mantis-development
+  name: cicada
   driver: postgres
   ssl_mode: disable
 

@@ -37,6 +37,7 @@ func (c *Connection) assignConfiguration(dbConf *configuration.Database) {
 }
 
 func (c *Connection) open() {
+
 	conn, err := sql.Open(c.Conf.Driver, c.url())
 
 	if err != nil {
@@ -50,7 +51,18 @@ func (c *Connection) open() {
 	c.Conn = conn
 }
 
+type migrationsLog struct{}
+
+func(m migrationsLog) Printf(format string, v ...interface {}) {
+	fmt.Printf(format, v)
+}
+
+func (m migrationsLog) Verbose() bool {
+	return true
+}
+
 func (c *Connection) Migrate(currentDirectory string) {
+	mlog := migrationsLog{}
 	driver, err := postgres.WithInstance(c.Conn, &postgres.Config{})
 
 	if err != nil {
@@ -59,6 +71,8 @@ func (c *Connection) Migrate(currentDirectory string) {
 
 	m, err := migrate.NewWithDatabaseInstance(
 		fmt.Sprintf("file:///%s/db/migrations", currentDirectory), c.Conf.Name, driver)
+
+	m.Log = mlog
 
 	if err != nil {
 		log.Fatal(err)
