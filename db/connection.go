@@ -27,7 +27,7 @@ func Init(app configuration.App) *Connection {
 	return &Database
 }
 
-func (c *Connection) url() string {
+func (c *Connection) Url() string {
 	d := c.Conf
 	return fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=%s", d.Driver, d.User, d.Pass, d.Host, d.Port, d.Name, d.SSL)
 }
@@ -38,7 +38,7 @@ func (c *Connection) assignConfiguration(dbConf *configuration.Database) {
 
 func (c *Connection) open() {
 
-	conn, err := sql.Open(c.Conf.Driver, c.url())
+	conn, err := sql.Open(c.Conf.Driver, c.Url())
 
 	if err != nil {
 		log.Fatal(err)

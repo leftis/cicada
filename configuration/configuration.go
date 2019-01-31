@@ -14,6 +14,7 @@ type App struct {
 
 type Config struct {
 	Environment string
+	Secret string
 	Database
 }
 
