@@ -1,10 +1,9 @@
 module github.com/leftis/cicada
 
 require (
-	cloud.google.com/go v0.35.1 // indirect
 	contrib.go.opencensus.io/exporter/stackdriver v0.9.1 // indirect
 	dmitri.shuralyov.com/app/changes v0.0.0-20181114035150-5af16e21babb // indirect
-	dmitri.shuralyov.com/service/change v0.0.0-20190127173012-184eb3bb42b2 // indirect
+	dmitri.shuralyov.com/service/change v0.0.0-20190130035545-6cc139383561 // indirect
 	git.apache.org/thrift.git v0.12.0 // indirect
 	github.com/Shopify/sarama v1.20.1 // indirect
 	github.com/aws/aws-sdk-go v1.16.26 // indirect
@@ -17,10 +16,10 @@ require (
 	github.com/cznic/sortutil v0.0.0-20181122101858-f5f958428db8 // indirect
 	github.com/cznic/strutil v0.0.0-20181122101858-275e90344537 // indirect
 	github.com/cznic/zappy v0.0.0-20181122101859-ca47d358d4b1 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/docker/distribution v2.7.1+incompatible // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
-	github.com/fsouza/fake-gcs-server v1.3.1 // indirect
+	github.com/fsouza/fake-gcs-server v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.0.0-20190125020943-a7658810eb74 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-ini/ini v1.41.0 // indirect
@@ -29,13 +28,13 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.2.2
 	github.com/golang/lint v0.0.0-20181217174547-8f45f776aaf1 // indirect
 	github.com/google/pprof v0.0.0-20190109223431-e84dfd68c163 // indirect
+	github.com/googleapis/gax-go v2.0.2+incompatible // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e // indirect
-	github.com/gorilla/mux v1.7.0 // indirect
 	github.com/graphql-go/graphql v0.7.7
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.7.0 // indirect
 	github.com/jackc/pgx v3.3.0+incompatible // indirect
-	github.com/jmoiron/sqlx v1.2.0 // indirect
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/julienschmidt/httprouter v1.2.0
 	github.com/kshvakov/clickhouse v1.3.5 // indirect
 	github.com/lib/pq v1.0.0
@@ -45,9 +44,9 @@ require (
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/mongodb/mongo-go-driver v0.2.0 // indirect
 	github.com/openzipkin/zipkin-go v0.1.5 // indirect
-	github.com/prometheus/client_model v0.0.0-20190115171406-56726106282f // indirect
+	github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90 // indirect
 	github.com/prometheus/common v0.2.0 // indirect
-	github.com/prometheus/procfs v0.0.0-20190117184657-bf6a532e95b1 // indirect
+	github.com/prometheus/procfs v0.0.0-20190129233650-316cf8ccfec5 // indirect
 	github.com/russross/blackfriday v2.0.0+incompatible // indirect
 	github.com/shurcooL/go v0.0.0-20190121191506-3fef8c783dec // indirect
 	github.com/shurcooL/gofontwoff v0.0.0-20181114050219-180f79e6909d // indirect
@@ -65,18 +64,18 @@ require (
 	github.com/shurcooL/webdavfs v0.0.0-20181215192745-5988b2d638f6 // indirect
 	github.com/smartystreets/assertions v0.0.0-20190116191733-b6c0e53d7304 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20181108003508-044398e4856c // indirect
-	github.com/ugorji/go/codec v0.0.0-20190126102652-8fd0f8d918c8 // indirect
+	github.com/ugorji/go/codec v0.0.0-20190128213124-ee1426cffec0 // indirect
 	github.com/urfave/cli v1.20.0
 	go.opencensus.io v0.19.0 // indirect
 	go4.org v0.0.0-20181109185143-00e24f1b2599 // indirect
-	golang.org/x/build v0.0.0-20190128191652-269e03abe74b // indirect
-	golang.org/x/crypto v0.0.0-20190128193316-c7b33c32a30b // indirect
+	golang.org/x/build v0.0.0-20190130215530-e9fe3dc8933d // indirect
+	golang.org/x/crypto v0.0.0-20190130090550-b01c7a725664
 	golang.org/x/exp v0.0.0-20190125153040-c74c464bbbf2 // indirect
 	golang.org/x/net v0.0.0-20190125091013-d26f9f9a57f3 // indirect
-	golang.org/x/oauth2 v0.0.0-20190115181402-5dab4167f31c // indirect
+	golang.org/x/oauth2 v0.0.0-20190130055435-99b60b757ec1 // indirect
 	golang.org/x/perf v0.0.0-20190124201629-844a5f5b46f4 // indirect
-	golang.org/x/sys v0.0.0-20190124100055-b90733256f2e // indirect
-	golang.org/x/tools v0.0.0-20190125232054-d66bd3c5d5a6 // indirect
+	golang.org/x/sys v0.0.0-20190130150945-aca44879d564 // indirect
+	golang.org/x/tools v0.0.0-20190131163942-067a2f313b69 // indirect
 	google.golang.org/genproto v0.0.0-20190128161407-8ac453e89fca // indirect
 	google.golang.org/grpc v1.18.0 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
