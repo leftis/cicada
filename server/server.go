@@ -13,7 +13,7 @@ func handleAdminLogin(c *gin.Context) {
 	_ = c.BindJSON(&admin)
 
 	if admin.Authenticate() != nil {
-		token := admin.GenerateJWTTokenString([]byte(configuration.App.Secret))
+		token := admin.GenerateJWTTokenString([]byte(config.App.Secret))
 		c.JSON(http.StatusOK, gin.H{"token": token})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{})
@@ -21,7 +21,7 @@ func handleAdminLogin(c *gin.Context) {
 }
 
 func Init() {
-	cd, env := configuration.App.CurrentDirectory, configuration.App.Environment
+	cd, env := config.App.CurrentDirectory, config.App.Environment
 
 	r := gin.Default()
 	r.LoadHTMLGlob(cd + "/templates/*")
