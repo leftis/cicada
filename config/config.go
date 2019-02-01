@@ -1,4 +1,4 @@
-package configuration
+package config
 
 import (
 	"gopkg.in/yaml.v2"
@@ -7,7 +7,9 @@ import (
 	"os"
 )
 
-type App struct {
+var App app
+
+type app struct {
 	CurrentDirectory string
 	Config
 }
@@ -28,20 +30,19 @@ type Database struct {
 	Driver string
 }
 
-func Init() (a App) {
-	a.setCurrentDirectory()
-	a.setConfiguration()
-	return a
+func Init() {
+	App.setCurrentDirectory()
+	App.setConfiguration()
 }
 
-func (a *App) setConfiguration() {
+func (a *app) setConfiguration() {
 	unmarshalErr := yaml.Unmarshal(openConfigurationFile(a.CurrentDirectory), &a.Config)
 	if unmarshalErr != nil {
 		log.Fatal(unmarshalErr)
 	}
 }
 
-func (a *App) setCurrentDirectory() {
+func (a *app) setCurrentDirectory() {
 	var err error
 	a.CurrentDirectory, err = os.Getwd()
 
@@ -51,7 +52,7 @@ func (a *App) setCurrentDirectory() {
 }
 
 func openConfigurationFile(currentDirectory string) (bytes []byte) {
-	b, err := ioutil.ReadFile(currentDirectory + "/configuration/global.yml")
+	b, err := ioutil.ReadFile(currentDirectory + "/config/global.yml")
 
 	if err != nil {
 		log.Fatal(err)

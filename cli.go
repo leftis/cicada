@@ -1,18 +1,20 @@
 package main
 
 import (
+	"github.com/leftis/cicada/config"
+	"github.com/leftis/cicada/db"
 	"github.com/leftis/cicada/server"
 	"gopkg.in/urfave/cli.v1"
 	"log"
 )
 
 func runApplication(_ *cli.Context) error {
-	server.Init(appConfig)
+	server.Init()
 	return nil
 }
 
 func runMigrations(_ *cli.Context) error {
-	database.Migrate(appConfig.CurrentDirectory)
+	db.DB.Migrate(config.App.CurrentDirectory)
 	return nil
 }
 

@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/jmoiron/sqlx"
+	"github.com/leftis/cicada/db"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 )
@@ -14,8 +14,8 @@ type Administrator struct {
 	jwt.StandardClaims
 }
 
-func (admin *Administrator) Authenticate(db2 *sqlx.DB) *Administrator {
-	err := db2.Get(admin, "SELECT * FROM administrators WHERE username = $1", admin.Username)
+func (admin *Administrator) Authenticate() *Administrator {
+	err := db.SQLX.Get(admin, "SELECT * FROM administrators WHERE username = $1", admin.Username)
 	if err != nil {
 		log.Fatal(err)
 	}

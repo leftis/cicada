@@ -6,39 +6,38 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/leftis/cicada/configuration"
+	"github.com/jmoiron/sqlx"
+	"github.com/leftis/cicada/config"
 	_ "github.com/lib/pq"
 	"log"
 )
 
-type Connection struct {
-	Conn *sql.DB
-	Conf *configuration.Database
-}
-
 var (
-	Database Connection
+	DB Connection
+	SQLX *sqlx.DB
 )
 
-func Init(app configuration.App) *Connection {
-	Database.assignConfiguration(&app.Config.Database)
-	Database.open()
-
-	return &Database
+type Connection struct {
+	Conn *sql.DB
+	Conf *config.Database
 }
 
-func (c *Connection) Url() string {
+type migrationsLog struct{}
+
+func Init() {
+	DB.Conf = &config.App.Config.Database
+	DB.open()
+	SQLX = sqlx.NewDb(DB.Conn, DB.Conf.Driver)
+}
+
+func (c *Connection) url() string {
 	d := c.Conf
 	return fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=%s", d.Driver, d.User, d.Pass, d.Host, d.Port, d.Name, d.SSL)
 }
 
-func (c *Connection) assignConfiguration(dbConf *configuration.Database) {
-	c.Conf = dbConf
-}
-
 func (c *Connection) open() {
 
-	conn, err := sql.Open(c.Conf.Driver, c.Url())
+	conn, err := sql.Open(c.Conf.Driver, c.url())
 
 	if err != nil {
 		log.Fatal(err)
@@ -49,16 +48,6 @@ func (c *Connection) open() {
 	}
 
 	c.Conn = conn
-}
-
-type migrationsLog struct{}
-
-func(m migrationsLog) Printf(format string, v ...interface {}) {
-	fmt.Printf(format, v)
-}
-
-func (m migrationsLog) Verbose() bool {
-	return true
 }
 
 func (c *Connection) Migrate(currentDirectory string) {
@@ -79,4 +68,12 @@ func (c *Connection) Migrate(currentDirectory string) {
 	}
 
 	m.Steps(2)
+}
+
+func(m migrationsLog) Printf(format string, v ...interface {}) {
+	fmt.Printf(format, v)
+}
+
+func (m migrationsLog) Verbose() bool {
+	return true
 }

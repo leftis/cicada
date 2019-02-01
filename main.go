@@ -1,26 +1,18 @@
 package main
 
 import (
-	"github.com/leftis/cicada/configuration"
+	"github.com/leftis/cicada/config"
 	"github.com/leftis/cicada/db"
 	"os"
 )
 
-var (
-	appConfig configuration.App
-	database  *db.Connection
-)
-
 func main() {
-	// Grab configuration
-	appConfig = configuration.Init()
+	config.Init()
+	db.Init()
+	defer db.DB.Conn.Close()
 
-	// Establish database connection
-	database = db.Init(appConfig)
-	defer database.Conn.Close()
+	//TODO: custom Close function on connection.go to handle Close
 
-	// Run command line interface
 	run(os.Args)
-
 	return
 }
