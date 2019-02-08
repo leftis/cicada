@@ -9,9 +9,7 @@ import (
 func main() {
 	config.Init()
 	db.Init()
-	defer db.DB.Conn.Close()
-
-	//TODO: custom Close function on connection.go to handle Close
+	defer db.Close()
 
 	run(os.Args)
 	return

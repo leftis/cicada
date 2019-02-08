@@ -6,6 +6,7 @@ require (
 	dmitri.shuralyov.com/service/change v0.0.0-20190130035545-6cc139383561 // indirect
 	git.apache.org/thrift.git v0.12.0 // indirect
 	github.com/Shopify/sarama v1.20.1 // indirect
+	github.com/appleboy/gin-jwt v2.5.0+incompatible
 	github.com/aws/aws-sdk-go v1.16.26 // indirect
 	github.com/coreos/go-systemd v0.0.0-20181031085051-9002847aa142 // indirect
 	github.com/cznic/b v0.0.0-20181122101859-a26611c4d92d // indirect
@@ -78,6 +79,7 @@ require (
 	golang.org/x/tools v0.0.0-20190131163942-067a2f313b69 // indirect
 	google.golang.org/genproto v0.0.0-20190128161407-8ac453e89fca // indirect
 	google.golang.org/grpc v1.18.0 // indirect
+	gopkg.in/dgrijalva/jwt-go.v3 v3.2.0 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/ini.v1 v1.41.0 // indirect
 	gopkg.in/urfave/cli.v1 v1.20.0

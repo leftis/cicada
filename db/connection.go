@@ -70,6 +70,13 @@ func (c *Connection) Migrate(currentDirectory string) {
 	m.Steps(2)
 }
 
+func Close() {
+	err := DB.Conn.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func(m migrationsLog) Printf(format string, v ...interface {}) {
 	fmt.Printf(format, v)
 }
