@@ -44,14 +44,13 @@ func AdminRoutes(e *gin.Engine, env string) {
 
 	admin := e.Group("/admin")
 	admin.POST("/login", middleware.LoginHandler)
+	admin.POST("/refresh_token", middleware.RefreshHandler)
+	//admin.GET("/graph", middleware.MiddlewareFunc())
+	admin.POST("/graph", middleware.MiddlewareFunc())
 
-	admin.Use(middleware.MiddlewareFunc())
-	{
-		admin.POST("/refresh_token", middleware.RefreshHandler)
-		admin.GET("/*path", func(c *gin.Context) {
-			c.HTML(http.StatusOK, "admin.tmpl", gin.H{"env": env})
-		})
-	}
+	admin.GET("/*path", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "admin.tmpl", gin.H{"env": env})
+	})
 }
 
 func Init() {

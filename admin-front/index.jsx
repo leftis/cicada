@@ -6,6 +6,6 @@ import './styles/admin.scss';
 import { Admin } from "./containers/Admin";
 
 ReactDOM.render(
-    <Admin compiler="TypeScript" framework="React" />,
+    <Admin />,
     document.getElementById("admin-entry")
 );
