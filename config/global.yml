@@ -8,4 +8,4 @@ database:
   ssl_mode: disable
 
 environment: development
-secret: thisismysecret!
+secret: thisismysecret

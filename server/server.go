@@ -21,7 +21,6 @@ func authenticator(c *gin.Context) (interface{}, error) {
 	return admin, jwt.ErrFailedAuthentication
 }
 
-
 func unauthorized(c *gin.Context, code int, message string) {
 	c.JSON(code, gin.H{
 		"code":    code,
@@ -29,14 +28,8 @@ func unauthorized(c *gin.Context, code int, message string) {
 	})
 }
 
-
-func Init() {
-	cd, env := config.App.CurrentDirectory, config.App.Environment
-
-	r := gin.Default()
-	r.LoadHTMLGlob(cd + "/templates/*")
-
-	m := &jwt.GinJWTMiddleware{
+func createJWTMIddleware() jwt.GinJWTMiddleware {
+	return jwt.GinJWTMiddleware{
 		Realm:         "cicada",
 		Key:           []byte(config.App.Secret),
 		Timeout:       time.Minute,
@@ -44,18 +37,27 @@ func Init() {
 		Authenticator: authenticator,
 		Unauthorized:  unauthorized,
 	}
+}
 
-	admin := r.Group("/admin")
-	admin.POST("/login", m.LoginHandler)
-	admin.Use(m.MiddlewareFunc())
+func AdminRoutes(e *gin.Engine, env string) {
+	middleware := createJWTMIddleware()
+
+	admin := e.Group("/admin")
+	admin.POST("/login", middleware.LoginHandler)
+
+	admin.Use(middleware.MiddlewareFunc())
 	{
-		admin.POST("/refresh_token", m.RefreshHandler)
+		admin.POST("/refresh_token", middleware.RefreshHandler)
 		admin.GET("/*path", func(c *gin.Context) {
 			c.HTML(http.StatusOK, "admin.tmpl", gin.H{"env": env})
 		})
 	}
+}
 
-	admin.Use()
-
+func Init() {
+	cd, env := config.App.CurrentDirectory, config.App.Environment
+	r := gin.Default()
+	r.LoadHTMLGlob(cd + "/templates/*")
+	AdminRoutes(r, env)
 	r.Run()
 }
