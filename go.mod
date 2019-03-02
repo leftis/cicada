@@ -31,9 +31,13 @@ require (
 	github.com/google/pprof v0.0.0-20190109223431-e84dfd68c163 // indirect
 	github.com/googleapis/gax-go v2.0.2+incompatible // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181103185306-d547d1d9531e // indirect
+	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/graph-gophers/graphql-go v0.0.0-20190214043811-70e684c13100
 	github.com/graphql-go/graphql v0.7.7
+	github.com/graphql-go/handler v0.2.3
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.7.0 // indirect
+	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/jackc/pgx v3.3.0+incompatible // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/julienschmidt/httprouter v1.2.0
@@ -67,6 +71,7 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20181108003508-044398e4856c // indirect
 	github.com/ugorji/go/codec v0.0.0-20190128213124-ee1426cffec0 // indirect
 	github.com/urfave/cli v1.20.0
+	github.com/vektah/gqlparser v1.1.0 // indirect
 	go.opencensus.io v0.19.0 // indirect
 	go4.org v0.0.0-20181109185143-00e24f1b2599 // indirect
 	golang.org/x/build v0.0.0-20190130215530-e9fe3dc8933d // indirect

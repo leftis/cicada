@@ -8,10 +8,10 @@ import (
 )
 
 type Administrator struct {
+	Username 		string `db:"username" json:"username"`
+	Password 		string `json:"password"`
+	HashedPassword 	string `db:"hashed_password"`
 	jwt.StandardClaims
-	Username string `db:"username" json:"username"`
-	HashedPassword string `db:"hashed_password"`
-	Password string `json:"password"`
 }
 
 func (admin *Administrator) Authenticate() *Administrator {
@@ -35,13 +35,3 @@ func (admin *Administrator) hashedPasswordMatch() bool {
 	}
 	return true
 }
-//
-//func (admin *Administrator) GenerateJWTTokenString(secret []byte) string {
-//	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), admin)
-//	tokenString, err := token.SignedString(secret)
-//	if err != nil {
-//		log.Println(err)
-//		return ""
-//	}
-//	return tokenString
-//}

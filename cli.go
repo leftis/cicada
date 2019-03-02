@@ -3,12 +3,14 @@ package main
 import (
 	"github.com/leftis/cicada/config"
 	"github.com/leftis/cicada/db"
+	"github.com/leftis/cicada/graphql"
 	"github.com/leftis/cicada/server"
 	"gopkg.in/urfave/cli.v1"
 	"log"
 )
 
 func runApplication(_ *cli.Context) error {
+	graphql.Init()
 	server.Init()
 	return nil
 }
