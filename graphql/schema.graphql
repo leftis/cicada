@@ -1,0 +1,12 @@
+schema {
+	query: Query
+}
+
+type Query {
+	getAdministrator(id: ID!): Administrator!
+}
+
+type Administrator {
+	id: ID
+	username: String!
+}
