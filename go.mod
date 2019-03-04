@@ -5,6 +5,7 @@ require (
 	dmitri.shuralyov.com/app/changes v0.0.0-20181114035150-5af16e21babb // indirect
 	dmitri.shuralyov.com/service/change v0.0.0-20190130035545-6cc139383561 // indirect
 	git.apache.org/thrift.git v0.12.0 // indirect
+	github.com/Masterminds/squirrel v1.1.0
 	github.com/Shopify/sarama v1.20.1 // indirect
 	github.com/appleboy/gin-jwt v2.5.0+incompatible
 	github.com/aws/aws-sdk-go v1.16.26 // indirect
@@ -49,6 +50,7 @@ require (
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/mongodb/mongo-go-driver v0.2.0 // indirect
 	github.com/openzipkin/zipkin-go v0.1.5 // indirect
+	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90 // indirect
 	github.com/prometheus/common v0.2.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190129233650-316cf8ccfec5 // indirect
