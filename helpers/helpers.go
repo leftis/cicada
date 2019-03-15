@@ -26,11 +26,7 @@ func boolP(b bool) *bool {
 	return &b
 }
 
-func GqlIDP(id uint) *graphql.ID {
+func GqlIDP(id uint64) *graphql.ID {
 	r := graphql.ID(fmt.Sprint(id))
 	return &r
-}
-
-type Pair struct {
-	Key, Value interface{}
 }

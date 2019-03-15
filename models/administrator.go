@@ -1,35 +1,49 @@
 package models
 
 import (
-	"github.com/dgrijalva/jwt-go"
-	"github.com/graph-gophers/graphql-go"
-	"github.com/leftis/cicada/db"
-	"github.com/leftis/cicada/helpers"
-	"golang.org/x/crypto/bcrypt"
-	sq "github.com/Masterminds/squirrel"
 	"log"
+
+	sq "github.com/Masterminds/squirrel"
+	"github.com/graph-gophers/graphql-go"
+	h "github.com/leftis/cicada/helpers"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/leftis/cicada/db"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Administrator struct {
-	ID              uint   `db:"id"`
-	Username 		string `db:"username" json:"username"`
-	Password 		string `json:"password"`
-	HashedPassword 	string `db:"hashed_password"`
+	Id             uint64 `db:"id"`
+	Username       string `db:"username" json:"username"`
+	Password       string `json:"password"`
+	HashedPassword string `db:"hashed_password"`
 	jwt.StandardClaims
 }
 
-func (m *Administrator) GetBy(pair helpers.Pair) error {
+func ConditionedSelectQuery(columns string, table string, conditions map[string]interface{}) sq.SelectBuilder {
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-	q := psql.Select("*").From("administrators").Where().Limit(1)
-	sql, args, _ := q.ToSql()
-	println(args)
-	println(sql)
+	return psql.Select("*").From(table).Where(conditions)
+}
 
-	return db.SQLX.Get(m, sql, pair.Key.(string), pair.Value.(string))
+func (m *Administrator) FindBy(conditions map[string]interface{}) error {
+	sql, args, err := ConditionedSelectQuery("*", "administrators", conditions).ToSql()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return db.SQLX.Get(m, sql, args...)
+}
+
+func (m *Administrator) FirstBy(conditions map[string]interface{}) error {
+	sql, args, err := ConditionedSelectQuery("*", "administrators", conditions).Limit(1).ToSql()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return db.SQLX.Get(m, sql, args...)
 }
 
 func (m *Administrator) Authenticate() *Administrator {
-	err := m.GetBy(helpers.Pair{"username",m.Username})
+	conditions := map[string]interface{}{"username": m.Username}
+	err := m.FirstBy(conditions)
 
 	if err != nil {
 		log.Fatal(err)
@@ -53,11 +67,15 @@ func (m *Administrator) hashedPasswordMatch() bool {
 
 // Graphql Specifics
 type AdministratorResolver struct {
-	M Administrator
+	M *Administrator
+}
+
+func (m *Administrator) Resolver() *AdministratorResolver {
+	return &AdministratorResolver{m}
 }
 
 func (u *AdministratorResolver) Id() *graphql.ID {
-	return helpers.GqlIDP(u.M.ID)
+	return h.GqlIDP(u.M.Id)
 }
 
 func (u *AdministratorResolver) Username() string {

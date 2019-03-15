@@ -3,17 +3,18 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
+
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
 	"github.com/leftis/cicada/config"
 	_ "github.com/lib/pq"
-	"log"
 )
 
 var (
-	DB Connection
+	DB   Connection
 	SQLX *sqlx.DB
 )
 
@@ -77,7 +78,7 @@ func Close() {
 	}
 }
 
-func(m migrationsLog) Printf(format string, v ...interface {}) {
+func (m migrationsLog) Printf(format string, v ...interface{}) {
 	fmt.Printf(format, v)
 }
 

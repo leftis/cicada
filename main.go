@@ -1,9 +1,10 @@
 package main
 
 import (
+	"os"
+
 	"github.com/leftis/cicada/config"
 	"github.com/leftis/cicada/db"
-	"os"
 )
 
 func main() {

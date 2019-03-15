@@ -2,11 +2,11 @@ package graphql
 
 import (
 	"context"
+	"io/ioutil"
+
 	"github.com/graph-gophers/graphql-go"
 	"github.com/leftis/cicada/config"
-	"github.com/leftis/cicada/helpers"
 	"github.com/leftis/cicada/models"
-	"io/ioutil"
 )
 
 var Schema *graphql.Schema
@@ -33,8 +33,8 @@ func getSchema(path string) (string, error) {
 // Root resolvers
 func (r *Resolver) GetAdministrator(
 	ctx context.Context,
-	args struct { ID graphql.ID }) *models.AdministratorResolver {
-		a := models.Administrator{}
-		a.GetBy(helpers.Pair{"id", args.ID})
-		return &models.AdministratorResolver{a}
+	args struct{ Id graphql.ID }) *models.AdministratorResolver {
+	a := models.Administrator{}
+	a.FirstBy(map[string]interface{}{"id": args.Id})
+	return a.Resolver()
 }

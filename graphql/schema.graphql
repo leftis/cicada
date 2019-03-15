@@ -3,7 +3,7 @@ schema {
 }
 
 type Query {
-	getAdministrator(id: ID!): Administrator!
+	getAdministrator(id: ID!): Administrator
 }
 
 type Administrator {
